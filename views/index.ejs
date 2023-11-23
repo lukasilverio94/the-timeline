@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- head -->
+  <%- include('./partials/head.ejs') %>
+  <body class="d-flex flex-column min-vh-100">
+    <!-- Nav -->
+    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
+      <h1 class="text-light ms-4 display-5 py-1">The Timeline</h1>
+    </nav>
+    <!-- End Nav -->
+
+    <!-- Post Message -->
+    <div class="container">
+      <form action="/posts" method="POST">
+        <label
+          for="postMessage"
+          class="form-control border-0 fs-1 text-center my-2"
+          >Leave us some message:
+        </label>
+        <textarea
+          name="post"
+          id="postMessage"
+          class="form-control"
+          style="height: 120px"
+          required
+        ></textarea>
+        <button type="submit" class="btn btn-primary mt-2">
+          <i class="fa-solid fa-pen pe-2"></i>Post a message
+        </button>
+      </form>
+
+      <h2 class="text-center my-3 text-secondary fw-light" id="allPosts">
+        All Posts:
+      </h2>
+      <!-- Post Messages -->
+      <div class="container mt-4 mb-4">
+        <% posts.forEach(post => { %>
+        <div class="card my-2 fs-5 shadow">
+          <div class="card-body">
+            <h3 class="card-title"><%= post.name %></h3>
+            <p class="card-text"><%= post.post %></p>
+            <p class="card-text">
+              <small class="text-muted">Posted on <%= post.getDate %></small>
+              <!-- Add a delete button/icon -->
+              <a
+                href="/posts/delete/<%= post._id %>"
+                class="btn btn-danger btn-sm float-right py-2"
+              >
+                <i class="fa-solid fa-trash"></i> Delete
+              </a>
+            </p>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+    <!-- Footer -->
+    <%- include('./partials/footer.ejs') %>   
+ 
+  </body>
+</html>
