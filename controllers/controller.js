@@ -1,4 +1,4 @@
-const posts = require("../models/timeline");
+import posts from "../models/timeline.js";
 
 //get the main page
 const getMainPage = (req, res) => {
@@ -18,6 +18,11 @@ const postMsg = (req, res) => {
     .then(() => res.redirect("/"))
     .catch((err) => console.log(err));
 };
+
+// Add Comment
+const addComment = (req, res) => {
+  res.send('test comment page')
+}
 // delete post
 const deletePost = async (req, res) => {
   const postId = req.params.id;
@@ -34,9 +39,12 @@ const getNotFound = (req, res) => {
   res.status(404).render("404", { title: "404" });
 };
 
-module.exports = {
+const requestMethods = {
   getMainPage,
   postMsg,
   getNotFound,
   deletePost,
+  addComment
 };
+
+export default requestMethods;

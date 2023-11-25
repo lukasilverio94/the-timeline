@@ -1,11 +1,12 @@
-const express = require("express");
+import express from "express";
 
 const route = express.Router();
-const controllerFun = require("../controller/controller");
+import requestMethods from "../controllers/controller.js";
 
-route.get("/", controllerFun.getMainPage);
-route.post("/posts", controllerFun.postMsg);
-route.get("/posts/delete/:id", controllerFun.deletePost);
-route.get("*", controllerFun.getNotFound);
+route.get("/", requestMethods.getMainPage);
+route.post("/posts", requestMethods.postMsg);
+route.post("/posts/add-comment", requestMethods.addComment);
+route.get("/posts/delete/:id", requestMethods.deletePost);
+route.get("*", requestMethods.getNotFound);
 
-module.exports = route;
+export default route;

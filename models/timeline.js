@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const moment = require("moment");
+import mongoose from "mongoose";
+import moment from "moment";
 const schema = mongoose.Schema;
 
 const postSchema = new schema(
@@ -28,4 +28,5 @@ const postSchema = new schema(
 postSchema.statics.deletePost = async function (postId) {
   return this.deleteOne({ _id: postId });
 };
-module.exports = mongoose.model("post", postSchema);
+
+export default mongoose.model("post", postSchema);
