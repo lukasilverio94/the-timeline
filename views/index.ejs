@@ -29,36 +29,51 @@
         </button>
       </form>
 
-      <h2 class="text-center my-3 text-secondary fw-light" id="allPosts">
+      <h2 class="text-center my-1 text-secondary fw-light" id="allPosts">
         All Posts:
       </h2>
       <!-- Post Messages -->
       <div class="container mt-4 mb-4">
-        <% posts.forEach(post => { %>
-        <div class="card my-2 fs-5 shadow">
-          <div class="card-body">
-            <h3 class="card-title"><%= post.name %></h3>
-            <p class="card-text"><%= post.post %></p>
-            <p class="card-text">
-              <small class="text-muted">Posted on <%= post.getDate %></small>
-              <!-- Add Comment Button -->
-              <a
-                href="/posts/add-comment/<%= post._id %>"
-                class="btn btn-secondary btn-sm ms-5 py-2"
-              >
-                Add Comment
-              </a>
-              <!-- Delete Button -->
-              <a
-                href="/posts/delete/<%= post._id %>"
-                class="btn btn-danger btn-sm ms-5 py-2"
-              >
-                <i class="fa-solid fa-trash"></i> Delete
-              </a>
-            </p>
+        <section>
+          <div class="container my-2 py-2">
+            <div class="row d-flex justify-content-center">
+              <div class="col-md-12 col-lg-10 col-xl-8">
+                <% posts.forEach(post => { %>
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <h3><%= post.name %></h3>
+                    <p class="py-2 fs-5"><%= post.post %></p>
+                    <small class="text-muted"
+                      >Posted on <%= post.getDate %></small
+                    >
+                  </div>
+                  <div class="card-footer py-3 border-0">
+                    <div class="d-flex flex-start w-100">
+                      <div class="form-outline w-100">
+                        <textarea
+                          class="form-control"
+                          id="textAreaExample"
+                          rows="4"
+                        ></textarea>
+                        <small>Message</small>
+                      </div>
+                    </div>
+                    <div class="float-end mt-2 pt-1">
+                      <a class="btn btn-primary btn-sm"> Post comment </a>
+                      <a
+                        href="/posts/delete/<%= post._id %>"
+                        class="btn btn-outline-danger btn-sm"
+                      >
+                        Delete
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <% }); %>
+              </div>
+            </div>
           </div>
-        </div>
-        <% }); %>
+        </section>
       </div>
     </div>
     <!-- Footer -->
