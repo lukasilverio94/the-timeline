@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 import moment from "moment";
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-const postSchema = new schema(
+const postSchema = new Schema(
   {
     name: {
       type: String,
@@ -20,6 +20,7 @@ const postSchema = new schema(
         return moment(createdAt).format("MMMM Do YYYY, h:mm:ss a");
       },
     },
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   { timestamps: true }
 );
@@ -29,4 +30,4 @@ postSchema.statics.deletePost = async function (postId) {
   return this.deleteOne({ _id: postId });
 };
 
-export default mongoose.model("post", postSchema);
+export default mongoose.model("Post", postSchema);

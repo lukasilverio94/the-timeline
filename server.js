@@ -5,6 +5,7 @@ import route from "./config/routes.js";
 import "./config/mongo.js";
 
 const app = express();
+app.use(express.static("public"));
 const port = process.env.PORT;
 
 app.set("view engine", "ejs");

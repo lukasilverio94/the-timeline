@@ -1,32 +1,42 @@
-import posts from "../models/timeline.js";
-
+import posts from "../models/Post.js";
+import comments from "../models/Comment.js";
 //get the main page
-const getMainPage = (req, res) => {
-  posts
-    .find()
-    .sort({ createdAt: -1 })
-    .then((result) => {
-      res.render("index", { title: "Home", posts: result });
-    })
-    .catch((err) => console.log(err));
+const getMainPage = async (req, res) => {
+  try {
+    const result = await posts.find().sort({ createdAt: -1 });
+    res.render("index", { title: "Home", posts: result });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
 };
 //post message
-const postMsg = (req, res) => {
-  const post = new posts(req.body);
-  post
-    .save()
-    .then(() => res.redirect("/"))
-    .catch((err) => console.log(err));
+const postMsg = async (req, res) => {
+  try {
+    const post = new posts(req.body);
+    post.save();
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal Server Error");
+  }
 };
 
 // Add Comment
-const addComment = (req, res) => {
-  res.send('test comment page')
-}
+const addComment = async (req, res) => {
+  try {
+    const comment = new Comment(req.body);
+    await comment.save();
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 // delete post
 const deletePost = async (req, res) => {
   const postId = req.params.id;
-
   try {
     await posts.deletePost(postId);
     res.redirect("/");
@@ -44,7 +54,7 @@ const requestMethods = {
   postMsg,
   getNotFound,
   deletePost,
-  addComment
+  addComment,
 };
 
 export default requestMethods;

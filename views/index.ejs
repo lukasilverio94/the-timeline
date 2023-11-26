@@ -4,9 +4,10 @@
   <%- include('./partials/head.ejs') %>
   <body class="d-flex flex-column min-vh-100">
     <!-- Nav -->
-    <nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
-      <h1 class="text-light ms-4 display-5 py-1">The Timeline</h1>
-    </nav>
+    <h1 class="display-3 border-bottom-2 bg-dark text-danger text-center py-2">
+      The Timeline
+    </h1>
+
     <!-- End Nav -->
 
     <!-- Post Message -->
@@ -24,8 +25,12 @@
           style="height: 120px"
           required
         ></textarea>
-        <button type="submit" class="btn btn-primary mt-2">
-          <i class="fa-solid fa-pen pe-2"></i>Post a message
+        <button
+          type="submit"
+          class="btn btn-primary btn-sm mt-2"
+          style="width: 130px"
+        >
+          <i class="fa-solid fa-pen pe-2"></i>Post
         </button>
       </form>
 
@@ -42,8 +47,8 @@
                 <div class="card mb-3">
                   <div class="card-body">
                     <h3><%= post.name %></h3>
-                    <p class="py-2 fs-5"><%= post.post %></p>
-                    <small class="text-muted"
+                    <p class="fs-5"><%= post.post %></p>
+                    <small class="text-end text-muted"
                       >Posted on <%= post.getDate %></small
                     >
                   </div>

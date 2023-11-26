@@ -1,5 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Philosopher:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&family=Baskervville&display=swap");
 
 body {
-  font-family: "Philosopher", sans-serif;
+  font-family: "Baskervville", serif !important;
+}
+
+h1 {
+  font-family: "Anton", sans-serif !important;
+  text-transform: uppercase;
+}
+
+p,
+button {
+  font-size: 1.2rem;
 }
