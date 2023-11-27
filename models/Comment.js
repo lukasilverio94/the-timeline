@@ -6,15 +6,21 @@ import postSchema from "./Post.js";
 
 const commentSchema = new Schema(
   {
-    author: {
-      type: String,
-      required: true,
-    },
     comment: {
       type: String,
       required: true,
     },
-    post: [{ type: Schema.Types.ObjectId, ref: "Post" }],
+    date: {
+      type: Date,
+      default: Date.now,
+      get: function (createdAt) {
+        return moment(createdAt).format("MMMM Do YYYY, h:mm:ss a");
+      },
+    },
+    post: {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+    },
   },
   { timestamps: true }
 );

@@ -22,18 +22,24 @@ const postMsg = async (req, res) => {
   }
 };
 
-// Add Comment
-const addComment = async (req, res) => {
+//new comment
+const newComment = async (req, res) => {
   try {
-    const comment = new Comment(req.body);
-    await comment.save();
-    res.redirect("/");
+    const postId = req.params.id; // Assuming the post ID is included in the URL
+    const post = await posts.findById(postId);
+
+    if (!post) {
+      // Handle the case where the post is not found
+      res.status(404).render("404", { title: "404" });
+      return;
+    }
+
+    res.render("commentPage", { title: "New Comment", post });
   } catch (err) {
-    console.error(err);
+    console.log(err);
     res.status(500).send("Internal Server Error");
   }
 };
-
 // delete post
 const deletePost = async (req, res) => {
   const postId = req.params.id;
@@ -45,16 +51,24 @@ const deletePost = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-const getNotFound = (req, res) => {
+const getPageNotFound = (req, res) => {
   res.status(404).render("404", { title: "404" });
 };
 
+const redirectToMainPage = async (req, res) => {
+  try {
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+  }
+};
 const requestMethods = {
   getMainPage,
   postMsg,
-  getNotFound,
+  getPageNotFound,
   deletePost,
-  addComment,
+  redirectToMainPage,
+  newComment,
 };
 
 export default requestMethods;

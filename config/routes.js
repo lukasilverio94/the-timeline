@@ -4,9 +4,10 @@ const route = express.Router();
 import requestMethods from "../controllers/controller.js";
 
 route.get("/", requestMethods.getMainPage);
+route.get("/posts", requestMethods.redirectToMainPage);
+route.get("/posts/new-comment/:id", requestMethods.newComment);
 route.post("/posts", requestMethods.postMsg);
-route.post("/posts/:id", requestMethods.addComment);
 route.get("/posts/delete/:id", requestMethods.deletePost);
-route.get("*", requestMethods.getNotFound);
+route.get("*", requestMethods.getPageNotFound);
 
 export default route;

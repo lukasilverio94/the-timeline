@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const postSchema = new Schema(
   {
-    name: {
+    title: {
       type: String,
     },
 
@@ -13,7 +13,7 @@ const postSchema = new Schema(
       required: true,
     },
 
-    getDate: {
+    date: {
       type: Date,
       default: Date.now,
       get: function (createdAt) {

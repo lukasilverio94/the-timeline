@@ -46,10 +46,10 @@
                 <% posts.forEach(post => { %>
                 <div class="card mb-3">
                   <div class="card-body">
-                    <h3><%= post.name %></h3>
+                    <h3><%= post.title %></h3>
                     <p class="fs-5"><%= post.post %></p>
                     <small class="text-end text-muted"
-                      >Posted on <%= post.getDate %></small
+                      >Posted on <%= post.date %></small
                     >
                   </div>
                   <div class="card-footer py-3 border-0">
@@ -60,9 +60,12 @@
                           id="textAreaExample"
                           rows="4"
                         ></textarea>
-                        <small>Message</small>
                       </div>
                     </div>
+                    <!-- Comments goes here -->
+                    <h4>All comments</h4>
+                    <div><%= %></div>
+                    <!-- End comments -->
                     <div class="float-end mt-2 pt-1">
                       <a class="btn btn-primary btn-sm"> Post comment </a>
                       <a

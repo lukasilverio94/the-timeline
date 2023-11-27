@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= post.title%></h1>
+    <% if (post) { %>
+    <div>
+      <h2><%= post.title %></h2>
+      <p><%= post.post %></p>
+      <!-- Display more details as needed -->
+
+      <!-- Comment Form -->
+      <form action="/comments" method="post">
+        <input type="hidden" name="postId" value="<%= post._id %>" />
+        <textarea
+          name="comment"
+          rows="4"
+          cols="50"
+          placeholder="Add your comment"
+        ></textarea>
+        <button type="submit">Add Comment</button>
+      </form>
+    </div>
+    <% } else { %>
+    <p>No post available</p>
+    <% } %>
+  </body>
+</html>
