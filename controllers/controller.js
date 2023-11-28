@@ -1,24 +1,36 @@
-import posts from "../models/Post.js";
-import comments from "../models/Comment.js";
-//get the main page
-const getMainPage = async (req, res) => {
+import Post from "../models/Post.js";
+import Comment from "../models/Comment.js";
+
+//Get All Posts
+const getAllPosts = async (req, res) => {
   try {
-    const result = await posts
-      .find()
+    const posts = await Post.find()
       .sort({ createdAt: -1 })
       .populate("comments");
-    res.render("index", { title: "Home", posts: result });
+    res.render("index", {
+      title: "Home",
+      posts,
+      err: "",
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
   }
 };
 
-//post message
+//Make Post
 const postMsg = async (req, res) => {
   try {
-    const post = new posts(req.body);
-    post.save();
+    if (req.body.post.length < 25) {
+      const posts = await Post.find({}).sort({ createdAt: -1 });
+      return res.render("index", {
+        title: "Home",
+        posts,
+        err: "Post should be at least 25 characters long.",
+      });
+    }
+    const post = new Post(req.body);
+    await post.save();
     res.redirect("/");
   } catch (err) {
     console.log(err);
@@ -29,15 +41,19 @@ const postMsg = async (req, res) => {
 //Get single post
 const getSinglePost = async (req, res) => {
   const postId = req.params.id;
-
   try {
-    const post = await posts.findById(postId);
+    const post = await Post.findById(postId);
     if (!post) {
       console.error("Post not found");
-      return res.status(404).render("404", { title: "404" });
+      return res.status(404).render("404", {
+        title: "404",
+      });
     }
-    // Render the page with the post details
-    res.render("singlePost", { title: "Post Details", post });
+    res.render("singlePost", {
+      title: "Post Details",
+      post,
+      err: "Post should be at least 25 characters long.",
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
@@ -48,15 +64,22 @@ const getSinglePost = async (req, res) => {
 const newComment = async (req, res) => {
   try {
     const postId = req.params.id;
+    if (req.body.commentText.length < 25) {
+      const post = await Post.findById(postId);
+      return res.render("singlePost", {
+        title: "Post",
+        post,
+        err: "Post should be at least 25 characters long.",
+      });
+    }
     const commentText = req.body.commentText;
-
-    const comment = new comments({
+    const comment = new Comment({
       commentText,
       post: postId,
     });
 
     await comment.save();
-    const post = await posts.findById(postId);
+    const post = await Post.findById(postId);
     post.comments.push(comment._id);
     await post.save();
     // Redirect to the main page after adding the comment
@@ -71,7 +94,7 @@ const newComment = async (req, res) => {
 const deletePost = async (req, res) => {
   const postId = req.params.id;
   try {
-    await posts.deletePost(postId);
+    await Post.deletePost(postId);
     res.redirect("/");
   } catch {
     console.log(err);
@@ -90,7 +113,7 @@ const redirectToMainPage = async (req, res) => {
   }
 };
 const requestMethods = {
-  getMainPage,
+  getAllPosts,
   getSinglePost,
   postMsg,
   getPageNotFound,

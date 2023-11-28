@@ -9,10 +9,11 @@
     >
       <% if (post) { %>
       <div>
-        <h3>Post:</h3>
+        <h5>Post:</h5>
         <p class="fs-5"><%= post.post %></p>
-        <small
-          ><span class="fw-semibold">Posted on:</span> <%= post.date %></small
+        <small class="fst-italic"
+          ><span class="fw-semibold text-muted">Posted on:</span> <%= post.date
+          %></small
         >
         <!-- Comment Form -->
         <form action="/posts/<%= post._id %>" method="post" class="mt-2">
@@ -31,6 +32,17 @@
           <div>
             <button type="submit" class="btn btn-success">Add Comment</button>
             <a href="/" class="btn btn-secondary">Cancel</a>
+            <% if (err) { %>
+            <p id="errorMessage" class="mt-2 text-danger"><%= err %></p>
+            <script>
+              setTimeout(function () {
+                let errorMessage = document.getElementById("errorMessage");
+                if (errorMessage) {
+                  errorMessage.style.display = "none";
+                }
+              }, 2000);
+            </script>
+            <% } %>
           </div>
         </form>
       </div>

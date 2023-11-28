@@ -8,7 +8,6 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
-
     date: {
       type: Date,
       default: Date.now,
@@ -26,4 +25,5 @@ postSchema.statics.deletePost = async function (postId) {
   return this.deleteOne({ _id: postId });
 };
 
-export default mongoose.model("Post", postSchema);
+const Post = mongoose.model("Post", postSchema);
+export default Post;

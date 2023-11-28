@@ -1,14 +1,14 @@
 import express from "express";
 
-const route = express.Router();
+const router = express.Router();
 import requestMethods from "../controllers/controller.js";
 
-route.get("/", requestMethods.getMainPage);
-route.get("/posts", requestMethods.redirectToMainPage);
-route.get("/posts/:id", requestMethods.getSinglePost);
-route.post("/posts/:id", requestMethods.newComment);
-route.post("/posts", requestMethods.postMsg);
-route.get("/posts/delete/:id", requestMethods.deletePost);
-route.get("*", requestMethods.getPageNotFound);
+router.get("/", requestMethods.getAllPosts);
+router.get("/posts", requestMethods.redirectToMainPage);
+router.get("/posts/:id", requestMethods.getSinglePost);
+router.post("/posts/:id", requestMethods.newComment);
+router.post("/posts", requestMethods.postMsg);
+router.get("/posts/delete/:id", requestMethods.deletePost);
+router.get("*", requestMethods.getPageNotFound);
 
-export default route;
+export default router;

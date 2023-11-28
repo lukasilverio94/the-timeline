@@ -3,23 +3,18 @@
   <!-- head -->
   <%- include('./partials/head.ejs') %>
   <body class="d-flex flex-column min-vh-100">
-    <!-- Nav -->
-    <h1
-      id="header-title"
-      class="display-3 border-bottom-2 bg-dark text-danger text-center py-2"
-    >
-      The Timeline
-    </h1>
+    <!-- Header -->
+    <header class="bg-dark text-danger text-center py-2">
+      <h1 id="header-title" class="display-3">The Timeline</h1>
+    </header>
 
     <!-- End Nav -->
 
     <!-- Post Message -->
     <div class="container">
       <form action="/posts" method="POST">
-        <label
-          for="postMessage"
-          class="form-control border-0 fs-1 text-center my-2"
-          >Leave us some message:
+        <label for="postMessage" class="form-control border-0 fs-1 mt-5"
+          >Write some post for today
         </label>
         <textarea
           name="post"
@@ -36,7 +31,19 @@
           <i class="fa-solid fa-pen pe-2"></i>Post
         </button>
       </form>
-
+      <!-- Error if Post is less than 25 characteres -->
+      <% if (err) { %>
+      <p id="errorMessage" class="mt-2 text-danger"><%= err %></p>
+      <script>
+        setTimeout(function () {
+          let errorMessage = document.getElementById("errorMessage");
+          if (errorMessage) {
+            errorMessage.style.display = "none";
+          }
+        }, 2000);
+      </script>
+      <% } %>
+      <!-- End Error -->
       <h2 class="text-center my-1 text-secondary fw-light" id="allPosts">
         All Posts:
       </h2>
@@ -60,15 +67,17 @@
                       <div class="form-outline w-100"></div>
                     </div>
                     <!-- Comments goes here -->
-                    <h6 class="text-secondary">All comments</h6>
+                    <h5 class="text-secondary d-flex gap-2 mb-2">
+                      <i class="fa-regular fa-message"></i>All comments
+                    </h5>
                     <div>
-                      <ul class="list-group">
+                      <ul class="list-group d-flex">
                         <% post.comments.forEach(comment => { %>
-                        <li
-                          class="mb-2 list-group-item d-flex justify-content-between"
-                        >
+                        <li class="mb-2 list-group-item py-4">
                           <%= comment.commentText %>
-                          <small class="text-muted"><%= comment.date %></small>
+                          <small class="text-muted d-block"
+                            ><%= comment.date %></small
+                          >
                         </li>
                         <% }); %>
                       </ul>
