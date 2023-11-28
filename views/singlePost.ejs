@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- head -->
+  <%- include('./partials/head.ejs') %>
+
+  <body>
+    <div
+      class="container d-flex align-items-center justify-content-center mt-3"
+    >
+      <% if (post) { %>
+      <div>
+        <h3>Post:</h3>
+        <p class="fs-5"><%= post.post %></p>
+        <small
+          ><span class="fw-semibold">Posted on:</span> <%= post.date %></small
+        >
+        <!-- Comment Form -->
+        <form action="/posts/<%= post._id %>" method="post" class="mt-2">
+          <input
+            type="hidden"
+            name="postId"
+            value="<%= post._id %>"
+            class="form-control"
+          />
+          <textarea
+            name="commentText"
+            class="form-control w-100 mb-2"
+            placeholder="Add your comment"
+            style="height: 130px"
+          ></textarea>
+          <div>
+            <a type="submit" class="btn btn-success">Add Comment</a>
+            <a href="/" class="btn btn-secondary">Cancel</a>
+          </div>
+        </form>
+      </div>
+      <% } else { %>
+      <p>No post available</p>
+      <% } %>
+    </div>
+  </body>
+</html>

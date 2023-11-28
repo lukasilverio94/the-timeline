@@ -4,7 +4,10 @@
   <%- include('./partials/head.ejs') %>
   <body class="d-flex flex-column min-vh-100">
     <!-- Nav -->
-    <h1 class="display-3 border-bottom-2 bg-dark text-danger text-center py-2">
+    <h1
+      id="header-title"
+      class="display-3 border-bottom-2 bg-dark text-danger text-center py-2"
+    >
       The Timeline
     </h1>
 
@@ -54,20 +57,19 @@
                   </div>
                   <div class="card-footer py-3 border-0">
                     <div class="d-flex flex-start w-100">
-                      <div class="form-outline w-100">
-                        <textarea
-                          class="form-control"
-                          id="textAreaExample"
-                          rows="4"
-                        ></textarea>
-                      </div>
+                      <div class="form-outline w-100"></div>
                     </div>
                     <!-- Comments goes here -->
                     <h4>All comments</h4>
                     <div><%= %></div>
                     <!-- End comments -->
                     <div class="float-end mt-2 pt-1">
-                      <a class="btn btn-primary btn-sm"> Post comment </a>
+                      <a
+                        href="/posts/<%= post.id %>"
+                        class="btn btn-primary btn-sm"
+                      >
+                        Post comment
+                      </a>
                       <a
                         href="/posts/delete/<%= post._id %>"
                         class="btn btn-outline-danger btn-sm"

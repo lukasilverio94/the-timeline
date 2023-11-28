@@ -4,10 +4,6 @@ const Schema = mongoose.Schema;
 
 const postSchema = new Schema(
   {
-    title: {
-      type: String,
-    },
-
     post: {
       type: String,
       required: true,

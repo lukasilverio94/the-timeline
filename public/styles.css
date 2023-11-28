@@ -4,12 +4,7 @@ body {
   font-family: "Baskervville", serif !important;
 }
 
-h1 {
+#header-title {
   font-family: "Anton", sans-serif !important;
   text-transform: uppercase;
-}
-
-p,
-button {
-  font-size: 1.2rem;
 }

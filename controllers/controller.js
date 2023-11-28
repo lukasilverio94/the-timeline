@@ -10,6 +10,24 @@ const getMainPage = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
+
+//Get single post
+const getSinglePost = async (req, res) => {
+  const postId = req.params.id;
+
+  try {
+    const post = await posts.findById(postId);
+    if (!post) {
+      console.error("Post not found");
+      return res.status(404).render("404", { title: "404" });
+    }
+    // Render the page with the post details
+    res.render("singlePost", { title: "Post Details", post });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+};
 //post message
 const postMsg = async (req, res) => {
   try {
@@ -25,21 +43,30 @@ const postMsg = async (req, res) => {
 //new comment
 const newComment = async (req, res) => {
   try {
-    const postId = req.params.id; // Assuming the post ID is included in the URL
-    const post = await posts.findById(postId);
+    const id = req.params.id;
+    const comment = new Comment({
+      text: req.body.commentText,
+      post: id,
+    });
+    await comment.save();
 
-    if (!post) {
-      // Handle the case where the post is not found
-      res.status(404).render("404", { title: "404" });
-      return;
+    const postRelated = await posts.findById(id);
+    if (!postRelated) {
+      console.error("Post not found");
+      return res.status(404).render("404", { title: "404" });
     }
 
-    res.render("commentPage", { title: "New Comment", post });
+    postRelated.comments.push(comment);
+    await postRelated.save();
+
+    // Redirect to the page displaying the single post
+    res.redirect(`/posts/${id}`);
   } catch (err) {
     console.log(err);
     res.status(500).send("Internal Server Error");
   }
 };
+
 // delete post
 const deletePost = async (req, res) => {
   const postId = req.params.id;
@@ -64,6 +91,7 @@ const redirectToMainPage = async (req, res) => {
 };
 const requestMethods = {
   getMainPage,
+  getSinglePost,
   postMsg,
   getPageNotFound,
   deletePost,
