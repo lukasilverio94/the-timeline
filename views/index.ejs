@@ -60,8 +60,19 @@
                       <div class="form-outline w-100"></div>
                     </div>
                     <!-- Comments goes here -->
-                    <h4>All comments</h4>
-                    <div><%= %></div>
+                    <h6 class="text-secondary">All comments</h6>
+                    <div>
+                      <ul class="list-group">
+                        <% post.comments.forEach(comment => { %>
+                        <li
+                          class="mb-2 list-group-item d-flex justify-content-between"
+                        >
+                          <%= comment.commentText %>
+                          <small class="text-muted"><%= comment.date %></small>
+                        </li>
+                        <% }); %>
+                      </ul>
+                    </div>
                     <!-- End comments -->
                     <div class="float-end mt-2 pt-1">
                       <a
@@ -79,7 +90,7 @@
                     </div>
                   </div>
                 </div>
-                <% }); %>
+                <% }) %>
               </div>
             </div>
           </div>

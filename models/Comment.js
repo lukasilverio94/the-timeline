@@ -6,7 +6,7 @@ import postSchema from "./Post.js";
 
 const commentSchema = new Schema(
   {
-    comment: {
+    commentText: {
       type: String,
       required: true,
     },

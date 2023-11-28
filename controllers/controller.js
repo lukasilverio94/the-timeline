@@ -3,10 +3,25 @@ import comments from "../models/Comment.js";
 //get the main page
 const getMainPage = async (req, res) => {
   try {
-    const result = await posts.find().sort({ createdAt: -1 });
+    const result = await posts
+      .find()
+      .sort({ createdAt: -1 })
+      .populate("comments");
     res.render("index", { title: "Home", posts: result });
   } catch (err) {
     console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+//post message
+const postMsg = async (req, res) => {
+  try {
+    const post = new posts(req.body);
+    post.save();
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
     res.status(500).send("Internal Server Error");
   }
 };
@@ -28,41 +43,26 @@ const getSinglePost = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-//post message
-const postMsg = async (req, res) => {
-  try {
-    const post = new posts(req.body);
-    post.save();
-    res.redirect("/");
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Internal Server Error");
-  }
-};
 
 //new comment
 const newComment = async (req, res) => {
   try {
-    const id = req.params.id;
-    const comment = new Comment({
-      text: req.body.commentText,
-      post: id,
+    const postId = req.params.id;
+    const commentText = req.body.commentText;
+
+    const comment = new comments({
+      commentText,
+      post: postId,
     });
+
     await comment.save();
-
-    const postRelated = await posts.findById(id);
-    if (!postRelated) {
-      console.error("Post not found");
-      return res.status(404).render("404", { title: "404" });
-    }
-
-    postRelated.comments.push(comment);
-    await postRelated.save();
-
-    // Redirect to the page displaying the single post
-    res.redirect(`/posts/${id}`);
+    const post = await posts.findById(postId);
+    post.comments.push(comment._id);
+    await post.save();
+    // Redirect to the main page after adding the comment
+    res.redirect("/");
   } catch (err) {
-    console.log(err);
+    console.error(err);
     res.status(500).send("Internal Server Error");
   }
 };
