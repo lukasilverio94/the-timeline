@@ -1,7 +1,7 @@
 import express from "express";
 import { check, body } from "express-validator"; // Import express-validator functions
 const router = express.Router();
-import postController from "../controllers/controller.js";
+import postController from "../controllers/postController.js";
 import authController from "../controllers/authController.js";
 
 router.get("/", postController.getAllPosts);
