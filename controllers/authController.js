@@ -39,9 +39,16 @@ const signup_post = async (req, res) => {
   }
 };
 
+const login_post = async (req, res) => {
+  const { email, password } = req.body;
+  console.log(email, password);
+  res.send("user login");
+};
+
 const authController = {
   signup_get,
   login_get,
+  login_post,
   signup_post,
 };
 

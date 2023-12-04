@@ -8,6 +8,7 @@ router.get("/", postController.getAllPosts);
 router.get("/signup", authController.signup_get);
 router.post("/signup", authController.signup_post);
 router.get("/login", authController.login_get);
+router.get("/login", authController.login_post);
 router.get("/posts", postController.redirectToMainPage);
 router.get("/posts/:id", postController.getSinglePost);
 router.post("/posts/:id", postController.newComment);
