@@ -1,14 +1,18 @@
 import express from "express";
-
+import { check, body } from "express-validator"; // Import express-validator functions
 const router = express.Router();
-import requestMethods from "../controllers/controller.js";
+import postController from "../controllers/controller.js";
+import authController from "../controllers/authController.js";
 
-router.get("/", requestMethods.getAllPosts);
-router.get("/posts", requestMethods.redirectToMainPage);
-router.get("/posts/:id", requestMethods.getSinglePost);
-router.post("/posts/:id", requestMethods.newComment);
-router.post("/posts", requestMethods.postMsg);
-router.get("/posts/delete/:id", requestMethods.deletePost);
-router.get("*", requestMethods.getPageNotFound);
+router.get("/", postController.getAllPosts);
+router.get("/signup", authController.signup_get);
+router.post("/signup", authController.signup_post);
+router.get("/login", authController.login_get);
+router.get("/posts", postController.redirectToMainPage);
+router.get("/posts/:id", postController.getSinglePost);
+router.post("/posts/:id", postController.newComment);
+router.post("/posts", postController.postMsg);
+router.get("/posts/delete/:id", postController.deletePost);
+router.get("*", postController.getPageNotFound);
 
 export default router;

@@ -112,7 +112,8 @@ const redirectToMainPage = async (req, res) => {
     console.log(err);
   }
 };
-const requestMethods = {
+
+const postController = {
   getAllPosts,
   getSinglePost,
   postMsg,
@@ -122,4 +123,4 @@ const requestMethods = {
   newComment,
 };
 
-export default requestMethods;
+export default postController;
