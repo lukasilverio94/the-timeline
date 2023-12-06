@@ -1,14 +1,11 @@
 import express from "express";
-import { check, body } from "express-validator"; // Import express-validator functions
 const router = express.Router();
 import postController from "../controllers/postController.js";
 import authController from "../controllers/authController.js";
 
-router.get("/", postController.getAllPosts);
-router.get("/signup", authController.signup_get);
+router.get("/", authController.signup_get);
+router.get("/home", postController.getAllPosts);
 router.post("/signup", authController.signup_post);
-router.get("/login", authController.login_get);
-router.get("/login", authController.login_post);
 router.get("/posts", postController.redirectToMainPage);
 router.get("/posts/:id", postController.getSinglePost);
 router.post("/posts/:id", postController.newComment);

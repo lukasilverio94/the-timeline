@@ -21,34 +21,22 @@ const handleErrors = (err) => {
 };
 
 const signup_get = async (req, res) => {
-  res.render("signup", { title: "Sign Up" });
-};
-
-const login_get = async (req, res) => {
-  res.render("login", { title: "Log In" });
+  res.render("signup", { err: "" });
 };
 
 const signup_post = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, email, password } = req.body;
   try {
-    const user = await User.create({ email, password });
+    const user = await User.create({ username, email, password });
     res.status(201).json(user);
   } catch (err) {
     const errors = handleErrors(err);
-    res.status(400).json({ errors });
+    res.render("signup", { err: errors });
   }
-};
-
-const login_post = async (req, res) => {
-  const { email, password } = req.body;
-  console.log(email, password);
-  res.send("user login");
 };
 
 const authController = {
   signup_get,
-  login_get,
-  login_post,
   signup_post,
 };
 
