@@ -1,14 +1,16 @@
 import express from "express";
 const router = express.Router();
 import postController from "../controllers/postController.js";
-import authController from "../controllers/authController.js";
+import userController from "../controllers/userController.js";
+import isAuth from "../middleware/isAuth.js";
 
-router.get("/", authController.signup_get);
-router.get("/home", postController.getAllPosts);
-router.post("/signup", authController.signup_post);
-router.post("/login", authController.userLogin);
-router.get("/posts", postController.redirectToMainPage);
-router.get("/posts/:id", postController.getSinglePost);
+router.get("/", userController.signup_get);
+router.get("/logout", userController.logOut);
+router.post("/signup", userController.signup_post);
+router.post("/login", userController.userLogin);
+router.get("/home", isAuth.userIsLoggedIn, postController.getAllPosts);
+router.get("/posts", isAuth.userIsLoggedIn, postController.redirectToMainPage);
+router.get("/posts/:id", isAuth.userIsLoggedIn, postController.getSinglePost);
 router.post("/posts/:id", postController.newComment);
 router.post("/posts", postController.postMsg);
 router.get("/posts/delete/:id", postController.deletePost);

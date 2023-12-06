@@ -1,7 +1,10 @@
+//Imports
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
+import cookieParser from "cookie-parser";
+import jwt from "jsonwebtoken";
 
-//Handle Errors
+//Handle Errors Function
 const handleErrors = (err) => {
   let errors = { username: "", email: "", password: "" };
 
@@ -22,6 +25,7 @@ const handleErrors = (err) => {
 };
 
 const signup_get = async (req, res) => {
+  console.log(req.cookies);
   res.render("signup", { err: "", success: "" });
 };
 
@@ -55,39 +59,35 @@ const userLogin = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email });
-
     if (!user) {
       return res.render("signup", { err: "User doesn't exist", success: "" });
     }
-
-    console.log("Entered Password:", password);
-    console.log("Stored Password:", user.password);
-
     // Compare the entered password with the stored hashed password
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
-
-    console.log("Password Comparison Result:", isPasswordCorrect);
-
+    console.log("Password is correct: " + isPasswordCorrect);
     if (isPasswordCorrect) {
-      console.log("Password is correct");
-      // Redirect or perform the desired action upon successful login.
+      //AUTH
+      res.cookie("isLoggedIn", true);
+      console.log(req.cookies);
       res.redirect("/home");
     } else {
-      console.log("Password is incorrect");
-      // Handle incorrect password case.
       res.render("signup", { err: "Incorrect password", success: "" });
     }
   } catch (err) {
-    console.error("Login error:", err);
-    // Handle other login errors.
     res.render("signup", { err: "Login failed", success: "" });
   }
+};
+
+const logOut = (req, res) => {
+  res.cookie("isLoggedIn", false);
+  res.redirect("/");
 };
 
 const authController = {
   signup_get,
   signup_post,
   userLogin,
+  logOut,
 };
 
 export default authController;
