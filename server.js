@@ -1,16 +1,16 @@
+//Imports
 import { config } from "dotenv";
 config();
 import express from "express";
 import router from "./config/routes.js";
 import "./config/mongo.js";
-
-const app = express();
-app.use(express.static("public"));
+import cookieParser from "cookie-parser";
 const port = process.env.PORT;
+const app = express();
 
+app.use(cookieParser());
+app.use(express.static("public"));
 app.set("view engine", "ejs");
-
-// middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(router);
