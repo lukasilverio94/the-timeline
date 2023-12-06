@@ -42,13 +42,13 @@
               id="username"
             />
           </div>
-          <% if(err){ %>
+          <% if(err && err.username){ %>
           <p class="text-danger"><%= err.username %></p>
           <% }%>
           <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
             <input type="email" class="form-control" id="email" name="email" />
-            <% if(err){ %>
+            <% if(err && err.email){ %>
             <p class="text-danger"><%= err.email %></p>
             <% }%>
           </div>
@@ -60,7 +60,7 @@
               class="form-control"
               id="password"
             />
-            <% if(err){ %>
+            <% if(err && err.password){ %>
             <p class="text-danger"><%= err.password %></p>
             <% }%>
           </div>

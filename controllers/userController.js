@@ -20,7 +20,7 @@ const handleErrors = (err) => {
       errors[properties.path] = properties.message;
     });
   }
-
+  console.log("Errors in handleErrors:", errors);
   return errors;
 };
 
@@ -31,9 +31,18 @@ const signup_get = async (req, res) => {
 
 const signup_post = async (req, res) => {
   const { username, email, password } = req.body;
-  try {
-    const saltRounds = 10;
 
+  if (!password) {
+    const errors = {
+      username: "",
+      email: "",
+      password: "Please enter a password",
+    };
+
+    return res.render("signup", { err: errors, success: "" });
+  }
+  try {
+    const saltRounds = 12;
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     console.log("Hashed Password:", hashedPassword);
@@ -62,9 +71,9 @@ const userLogin = async (req, res) => {
     if (!user) {
       return res.render("signup", { err: "User doesn't exist", success: "" });
     }
-    // Compare the entered password with the stored hashed password
+
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
-    console.log("Password is correct: " + isPasswordCorrect);
+
     if (isPasswordCorrect) {
       //AUTH
       res.cookie("isLoggedIn", true);
@@ -74,6 +83,7 @@ const userLogin = async (req, res) => {
       res.render("signup", { err: "Incorrect password", success: "" });
     }
   } catch (err) {
+    console.log("Errors in signup_post:", errors);
     res.render("signup", { err: "Login failed", success: "" });
   }
 };
