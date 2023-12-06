@@ -34,16 +34,16 @@
         <h2>Sign up</h2>
         <form action="/signup" method="post" style="width: 280px">
           <div class="mb-3">
-            <label for="userName" class="form-label">Username</label>
+            <label for="username" class="form-label">Username</label>
             <input
+              name="username"
               type="text"
               class="form-control"
               id="username"
-              name="userName"
             />
           </div>
           <% if(err){ %>
-          <p class="text-danger"><%= err.userName %></p>
+          <p class="text-danger"><%= err.username %></p>
           <% }%>
           <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
@@ -65,13 +65,16 @@
             <% }%>
           </div>
           <button class="btn btn-primary">Sign up</button>
+          <% if(success){ %>
+          <p class="text-success"><%= success %></p>
+          <% } %>
         </form>
         <!-- Handling Error From Sign Up -->
       </div>
       <!-- LOG IN FORM -->
       <div class="col-md-6">
         <h2>Log In</h2>
-        <form action="/login" method="get" style="width: 280px">
+        <form action="/login" method="post" style="width: 280px">
           <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
             <input type="email" class="form-control" id="email" name="email" />
@@ -86,6 +89,9 @@
             />
           </div>
           <button class="btn btn-primary">Log In</button>
+          <% if(err){ %>
+          <p class="text-danger mt-2"><%= err %></p>
+          <% } %>
         </form>
         <!-- Handling Error LOGIN -->
       </div>
