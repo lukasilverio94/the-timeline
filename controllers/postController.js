@@ -11,6 +11,8 @@ const getAllPosts = async (req, res) => {
       title: "Home",
       posts,
       err: "",
+      username: res.locals.username,
+      email: res.locals.email,
     });
   } catch (err) {
     console.error(err);
@@ -31,7 +33,7 @@ const postMsg = async (req, res) => {
     }
     const post = new Post(req.body);
     await post.save();
-    res.redirect("/");
+    res.redirect("/home");
   } catch (err) {
     console.log(err);
     res.status(500).send("Internal Server Error");
@@ -95,7 +97,7 @@ const deletePost = async (req, res) => {
   const postId = req.params.id;
   try {
     await Post.deletePost(postId);
-    res.redirect("/");
+    res.redirect("/home");
   } catch {
     console.log(err);
     res.status(500).send("Internal Server Error");
