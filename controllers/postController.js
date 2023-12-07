@@ -1,18 +1,21 @@
 import Post from "../models/Post.js";
 import Comment from "../models/Comment.js";
+import User from "../models/User.js";
 
 //Get All Posts
 const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.find()
       .sort({ createdAt: -1 })
-      .populate("comments");
+      .populate("user", "comments")
+      .exec();
+
+    console.log(posts);
+
     res.render("index", {
       title: "Home",
       posts,
       err: "",
-      username: res.locals.username,
-      email: res.locals.email,
     });
   } catch (err) {
     console.error(err);
@@ -31,8 +34,12 @@ const postMsg = async (req, res) => {
         err: "Post should be at least 25 characters long.",
       });
     }
-    const post = new Post(req.body);
-    await post.save();
+    const postData = {
+      post: req.body.post,
+      author: req.params.id,
+    };
+    const newPost = new Post(postData);
+    await newPost.save();
     res.redirect("/home");
   } catch (err) {
     console.log(err);
@@ -79,13 +86,12 @@ const newComment = async (req, res) => {
       commentText,
       post: postId,
     });
-
+    //Save Comment
     await comment.save();
     const post = await Post.findById(postId);
     post.comments.push(comment._id);
     await post.save();
-    // Redirect to the main page after adding the comment
-    res.redirect("/");
+    res.redirect("/home");
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");

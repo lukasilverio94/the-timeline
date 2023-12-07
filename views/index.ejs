@@ -14,13 +14,12 @@
         <button class="btn btn-secondary">Logout</button>
       </form>
       <!-- END LOGOUT -->
-
       <!-- GREETING -->
-
+      <h3>Hello, <span class="text-primary"><%= username %>!</span></h3>
       <!-- END GREETING -->
       <!-- POST FORM -->
-      <form action="/posts" method="POST">
-        <label for="postMessage" class="form-control border-0 fs-1 mt-2">
+      <form action="/posts/<%= id %>" method="POST">
+        <label for="postMessage" class="form-control border-0 fs-3 mt-2">
           Post:
         </label>
         <textarea
@@ -64,6 +63,7 @@
                 <div class="card mb-3">
                   <div class="card-body">
                     <h3><%= post.title %></h3>
+                    <h4>Posted by: <%= post.username%></h4>
                     <p class="fs-5"><%= post.post %></p>
                     <small class="text-end text-muted"
                       >Posted on <%= post.date %></small

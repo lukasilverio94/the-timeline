@@ -107,11 +107,11 @@ const logOut = (req, res) => {
   res.redirect("/");
 };
 
-const authController = {
+const userController = {
   renderHomePage,
   signup_post,
   userLogin,
   logOut,
 };
 
-export default authController;
+export default userController;

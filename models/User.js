@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
 import validator from "validator";
 import bcrypt from "bcrypt";
+const Schema = mongoose.Schema;
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   username: {
     type: String,
     required: [true, "Please enter an username"],
@@ -19,21 +20,13 @@ const userSchema = new mongoose.Schema({
     required: [true, "Please enter a password"],
     minlength: [6, "Minimum password length is 6 characters"],
   },
+  posts: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
 });
-
-// // Fire a function after doc saved to database
-// userSchema.post("save", function (doc, next) {
-//   console.log("new user was created and saved", doc);
-//   next();
-// });
-
-// //Fire function before doc saved to database
-// //HASH PASSWORD
-// userSchema.pre("save", async function (next) {
-//   const salt = await bcrypt.genSalt();
-//   this.password = await bcrypt.hash(this.password, salt);
-//   next();
-// });
 
 const User = mongoose.model("user", userSchema);
 

@@ -9,6 +9,10 @@ const postSchema = new Schema(
       required: true,
       minlength: 25,
     },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
     date: {
       type: Date,
       default: Date.now,
