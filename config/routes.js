@@ -10,7 +10,7 @@ router.post("/signup", userController.signup_post);
 router.post("/login", userController.userLogin);
 router.get("/home", isAuth.userIsLoggedIn, postController.getAllPosts);
 router.get("/posts", postController.redirectToMainPage);
-router.post("/posts/:userId", postController.postMsg);
+router.post("/posts/:userId", isAuth.userIsLoggedIn, postController.postMsg);
 router.get("/posts/:id", postController.getSinglePost);
 router.post("/posts/:id", postController.newComment);
 router.get("/posts/delete/:id", postController.deletePost);

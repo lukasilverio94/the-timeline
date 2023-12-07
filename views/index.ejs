@@ -62,8 +62,7 @@
                 <% posts.forEach(post => { %>
                 <div class="card mb-3">
                   <div class="card-body">
-                    <h3><%= post.title %></h3>
-                    <h4>Posted by: <%= post.username%></h4>
+                    <h4>Posted by: <%= post.id%></h4>
                     <p class="fs-5"><%= post.post %></p>
                     <small class="text-end text-muted"
                       >Posted on <%= post.date %></small

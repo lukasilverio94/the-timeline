@@ -3,24 +3,18 @@ import Comment from "../models/Comment.js";
 import User from "../models/User.js";
 
 //Get All Posts
-const getAllPosts = async (req, res) => {
-  try {
-    const posts = await Post.find()
-      .sort({ createdAt: -1 })
-      .populate("user", "comments")
-      .exec();
-
-    console.log(posts);
-
-    res.render("index", {
-      title: "Home",
-      posts,
-      err: "",
+const getAllPosts = (req, res) => {
+  Post.find()
+    .sort({ createdAt: -1 })
+    .populate("comments", "user")
+    .then((result) => {
+      res.render("index", {
+        title: "Home",
+        posts: result,
+        err: null,
+      });
+      console.log(result);
     });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
 };
 
 //Make Post
@@ -36,7 +30,7 @@ const postMsg = async (req, res) => {
     }
     const postData = {
       post: req.body.post,
-      author: req.params.id,
+      user: req.params.username,
     };
     const newPost = new Post(postData);
     await newPost.save();
