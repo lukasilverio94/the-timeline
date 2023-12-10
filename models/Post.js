@@ -9,7 +9,7 @@ const postSchema = new Schema(
       required: true,
       minlength: 25,
     },
-    user: {
+    author: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
