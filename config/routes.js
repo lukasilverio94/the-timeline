@@ -17,7 +17,11 @@ router.get(
   isAuth.userIsLoggedIn,
   postController.getEditPost
 );
-router.post("/post/edit/:id", isAuth.userIsLoggedIn, postController.updatePost);
+router.post(
+  "/posts/edit/:id",
+  isAuth.userIsLoggedIn,
+  postController.updatePost
+);
 router.post("/posts/new-comment/:id", postController.newComment);
 router.get("/posts/delete/:id", postController.deletePost);
 
