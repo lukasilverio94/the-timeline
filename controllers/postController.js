@@ -70,6 +70,45 @@ const getSinglePost = (req, res) => {
     });
 };
 
+// Edit Post
+//Get EditPost Page
+const getEditPost = async (req, res) => {
+  const postId = req.params.id;
+  Post.findById(postId)
+    .then((post) => {
+      if (!post) {
+        console.error("Post not found");
+        res.status(404).render("404", {
+          title: "404",
+        });
+      } else {
+        res.render("editPost", {
+          title: "Edit Post",
+          post,
+          err: "Post should be at least 25 characters long.",
+        });
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+    });
+};
+
+//update post
+const updatePost = async (req, res) => {
+  const { id } = req.params;
+  Post.findByIdAndUpdate(id, req.body)
+    .then((result) => {
+      console.log(result);
+      res.redirect("/home");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("Internal Server Error");
+    });
+};
+
 // New comment
 const newComment = (req, res) => {
   const postId = req.params.id;
@@ -129,6 +168,8 @@ const postController = {
   deletePost,
   redirectToMainPage,
   newComment,
+  getEditPost,
+  updatePost,
 };
 
 export default postController;

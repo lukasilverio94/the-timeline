@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('./partials/head.ejs') %>
+  <body>
+    <div class="container mt-3">
+      <h5 class="display-6">Edit Post</h5>
+
+      <form action="/post/edit/<%= post.id %>" method="post" id="form">
+        <!-- End Empty Name Validation -->
+        <label for="message" class="mb-2">Post: </label>
+        <textarea
+          class="form-control"
+          name="message"
+          id="message"
+          style="height: 135px"
+          required
+        >
+<%= post.post %></textarea
+        >
+        <!-- Validate Message Length -->
+        <% if(err){ %>
+        <p class="text-danger mt-2"><%= err %></p>
+        <% } %>
+        <!-- End Message Validation -->
+        <a href="/home">
+          <button class="btn btn-primary mt-2" type="submit">Submit</button>
+        </a>
+      </form>
+    </div>
+  </body>
+</html>

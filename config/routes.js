@@ -11,8 +11,14 @@ router.post("/login", userController.userLogin);
 router.get("/home", isAuth.userIsLoggedIn, postController.getAllPosts);
 router.post("/posts/:userId", isAuth.userIsLoggedIn, postController.postMsg);
 router.get("/posts", postController.redirectToMainPage);
-router.get("/posts/:id", postController.getSinglePost);
-router.post("/posts/:id", postController.newComment);
+router.get("/posts/:id", isAuth.userIsLoggedIn, postController.getSinglePost);
+router.get(
+  "/posts/edit/:id",
+  isAuth.userIsLoggedIn,
+  postController.getEditPost
+);
+router.post("/post/edit/:id", isAuth.userIsLoggedIn, postController.updatePost);
+router.post("/posts/new-comment/:id", postController.newComment);
 router.get("/posts/delete/:id", postController.deletePost);
 
 router.get("*", postController.getPageNotFound);

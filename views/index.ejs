@@ -37,7 +37,7 @@
           <i class="fa-solid fa-pen pe-2"></i>Post
         </button>
       </form>
-      <!-- Error if Post is less than 25 characteres -->
+      <!-- Error if Post is less than 25 characters -->
       <% if (err) { %>
       <p id="errorMessage" class="mt-2 text-danger"><%= err %></p>
       <script>
@@ -64,6 +64,23 @@
                   <div class="card-body">
                     <h4>Posted by: <%= post.author.username%></h4>
                     <p class="fs-5"><%= post.post %></p>
+                    <!-- Conditional to show buttons - Only Author owners post -->
+                    <% if(id === post.author.id) {%>
+                    <div class="mt-1">
+                      <a
+                        href="/posts/edit/<%= post.id %>"
+                        class="btn btn-secondary btn-sm"
+                        >Edit</a
+                      >
+                      <a
+                        href="/posts/delete/<%= post._id %>"
+                        class="btn btn-danger btn-sm"
+                      >
+                        Delete
+                      </a>
+                    </div>
+                    <% } %>
+                    <!-- End condition Buttons -->
                     <small class="text-end text-muted"
                       >Posted on <%= post.date %></small
                     >
@@ -81,6 +98,9 @@
                         <% post.comments.forEach(comment => { %>
                         <li class="mb-2 list-group-item py-4">
                           <%= comment.commentText %>
+                          <div class="text-muted">
+                            Commented by: <%= post.author.username %>
+                          </div>
                           <small class="text-muted d-block"
                             ><%= comment.date %></small
                           >
@@ -95,12 +115,6 @@
                         class="btn btn-primary btn-sm"
                       >
                         Post comment
-                      </a>
-                      <a
-                        href="/posts/delete/<%= post._id %>"
-                        class="btn btn-outline-danger btn-sm"
-                      >
-                        Delete
                       </a>
                     </div>
                   </div>

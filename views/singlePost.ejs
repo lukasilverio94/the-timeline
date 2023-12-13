@@ -16,7 +16,11 @@
           %></small
         >
         <!-- Comment Form -->
-        <form action="/posts/<%= post._id %>" method="post" class="mt-2">
+        <form
+          action="/posts/new-comment/<%= post._id %>"
+          method="post"
+          class="mt-2"
+        >
           <input
             type="hidden"
             name="postId"
