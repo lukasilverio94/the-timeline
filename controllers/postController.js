@@ -36,7 +36,7 @@ const postMsg = (req, res) => {
   } else {
     const postData = {
       post: req.body.post,
-      author: req.params.id,
+      author: req.params.userId,
     };
     const newPost = new Post(postData);
     newPost
